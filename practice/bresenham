@@ -1,0 +1,87 @@
+def lineBres(x0,y0,xEnd,yEnd):
+	delta_x=xEnd-x0
+	delta_y=yEnd-y0
+	if delta_x !=0:
+		m=delta_y/delta_x
+	else:
+		m=4000   			
+
+	dx=abs(xEnd-x0)
+	dy=abs(yEnd-y0)
+
+	if dy >= dx:				
+		steps=dy
+		t0=y0
+		tEnd=yEnd
+		t1=dx
+		t2=dy
+	else:
+		steps=dx
+		t0=x0
+		tEnd=xEnd
+		t1=dy
+		t2=dx
+
+	p=2*t1 - t2    			         
+
+	if t0 > tEnd:				
+		x=xEnd
+		y=yEnd
+	else:
+		x=x0
+		y=y0
+
+	setPixel(x,y)
+	for k in range(steps):
+		if dy >= dx:
+			y=y+1
+		else:
+			x=x+1
+		if p < 0 :
+			p+=2*t1
+		else:
+			if dy >= dx:
+				if m >= 0:
+					x+=1
+				if m < 0:
+					x-=1
+			else:
+				if m >=0:
+					y+=1
+				if m < 0:
+					y-=1
+			p=p+2*t1-2*t2
+		setPixel(x,y)
+		
+
+
+
+
+
+
+
+def Brescircle(xcenter,ycenter,radius):
+	x=0
+	y=radius
+	p=3 - 2*radius
+	circlePlotpoints(xcenter,ycenter,x,y)
+	while x <= y:
+		x+=1
+		if p<0:
+			p=p+4*x+6
+		else:
+			y-=1
+			p= p+ 4*(x-y) + 10
+		circlePlotpoints(xcenter,ycenter,x,y)
+
+def circlePlotpoints(xcenter,ycenter,x,y):
+	setPixel(xcenter + x , ycenter + y)
+	setPixel(xcenter + x , ycenter - y)
+	setPixel(xcenter - x , ycenter + y)
+	setPixel(xcenter - x , ycenter - y)
+	setPixel(xcenter + y , ycenter + x)
+	setPixel(xcenter + y , ycenter - x)
+	setPixel(xcenter - y , ycenter + x)
+	setPixel(xcenter - y , ycenter - x)		
+		
+		
